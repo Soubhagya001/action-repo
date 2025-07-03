@@ -1,0 +1,20 @@
+name: Send Webhook to Flask Server
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  notify-webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send webhook to Flask
+        run: |
+          curl -X POST https://693e-183-83-38-46.ngrok-free.app/webhook \
+          -H "Content-Type: application/json" \
+          -d '{
+            "event": "${{ github.event_name }}",
+            "author": "${{ github.actor }}",
+            "from_branch": "NA",
+            "to_branch": "${{ github.ref_name }}"
+          }'
